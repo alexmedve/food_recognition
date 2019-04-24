@@ -1,8 +1,15 @@
 <template>
     <v-container>
         <v-layout row wrap>
-            <h1 @click="getIngredients">Test</h1>
+            <h1>Ingredients</h1>
         </v-layout>
+        <div v-if="ingredients.length > 0" >
+            <ul collection>
+                <li v-for="(ingredient, index) in ingredients" :key="index" collection-item>
+                    {{ingredient.name}} | chance: {{ingredient.value}}
+                </li>
+            </ul>
+        </div>
     </v-container>
 </template>
 
@@ -12,20 +19,21 @@
         apiKey: '3a7f9e4ec5474163bec285c80e4dc7ff'
     });
     export default {
+        props: ['imageUrl'],
         data() {
             return {
                 ingredients: [],
-                errors: []
+                errors: [],
             }
         },
-        computed: {
-            ingredients: () => {
+        watch: {
+            imageUrl: function (newImageUrl) {
                 clarifaiApp.models.predict("bd367be194cf45149e75f01d59f77ba7",
-                    "https://www.blondelish.com/wp-content/uploads/2017/08/1-1.jpg").then(
-                    function (response) {
+                    newImageUrl).then(
+                    (response) => {
                         this.ingredients = response.outputs[0].data.concepts;
                     },
-                    function (err) {
+                    (err) => {
                         this.errors.push(err);
                     }
                 );
