@@ -40,7 +40,7 @@
             deleteImageUrl() {
                 this.imageUrlInput = '';
                 this.imageUrl = '';
-                var link = this.imageUrl;
+                var link = '';
                 this.$emit('linkdeleted', link);
             }
         }

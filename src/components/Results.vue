@@ -1,11 +1,11 @@
 <template>
-    <v-container>
+    <v-container v-if="ingredients.length > 0">
         <v-layout row wrap>
             <h1>Ingredients</h1>
         </v-layout>
-        <div v-if="ingredients.length > 0" >
-            <ul collection>
-                <li v-for="(ingredient, index) in ingredients" :key="index" collection-item>
+        <div>
+            <ul>
+                <li v-for="(ingredient, index) in ingredients" :key="index">
                     {{ingredient.name}} | chance: {{ingredient.value}}
                 </li>
             </ul>
@@ -28,6 +28,10 @@
         },
         watch: {
             imageUrl: function (newImageUrl) {
+                if(newImageUrl == '')
+                {
+                    this.ingredients = []
+                }
                 clarifaiApp.models.predict("bd367be194cf45149e75f01d59f77ba7",
                     newImageUrl).then(
                     (response) => {

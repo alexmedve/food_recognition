@@ -10,7 +10,7 @@
 
     <v-content>
       <v-container>
-        <app-input @linkchanged="requestIngredients($event)"></app-input>
+        <app-input @linkchanged="requestIngredients($event)" @linkdeleted="requestIngredients($event)"></app-input>
         <app-results :imageUrl="imageUrl"></app-results>
       </v-container>
     </v-content>
